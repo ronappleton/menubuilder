@@ -97,6 +97,23 @@ return [
 
     ],
 
+    'classes' => [
+
+        'active' => 'menu-builder.classes.bootstrap.4', //Tells menu-item.blade.php which of below to use
+
+        'bootstrap' => [
+            "3" => [
+              'item' => '',
+              'link' => '',
+            ],
+           "4" => [
+               'item' => 'nav-item',
+               'link' => 'nac-link',
+           ],
+        ],
+
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Menu Filters
