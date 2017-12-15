@@ -9,6 +9,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
 use RonAppleton\MenuBuilder\Events\BuildingMenu;
 
+
 class ModuleServiceProvider extends ServiceProvider
 {
     public function boot(Dispatcher $events, Repository $config)
