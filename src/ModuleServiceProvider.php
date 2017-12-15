@@ -8,7 +8,7 @@ use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
 use RonAppleton\MenuBuilder\Events\BuildingMenu;
-use RonAppleton\Http\ViewComposers\MenuBuilderComposer;
+use RonAppleton\MenuBuilder\Http\ViewComposers\MenuBuilderComposer;
 
 class ModuleServiceProvider extends ServiceProvider
 {
