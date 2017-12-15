@@ -93,7 +93,8 @@ return [
     ],
 
     'views' => [
-        'layouts.admin.sidebars.left',
+        'menu-builder:partials.menu',
+        'menu-builder:partials.menu-item',
 
     ],
 
@@ -111,7 +112,10 @@ return [
                 'outer.ul' => 'nav nav-pills flex-column',
 
                 'item' => 'nav-item',
-                'link' => 'nac-link',
+                'link' => 'nav-link',
+
+                'submenu' => 'nav-item'
+
             ],
         ],
 
