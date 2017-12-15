@@ -2,27 +2,16 @@
 
 namespace RonAppleton\MenuBuilder;
 
-use Blade;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
 use RonAppleton\MenuBuilder\Events\BuildingMenu;
-
+use RonAppleton\Http\ViewComposers\MenuBuilderComposer;
 
 class ModuleServiceProvider extends ServiceProvider
 {
-    public function boot(Dispatcher $events, Repository $config)
-    {
-        $this->loadViews();
-
-        $this->publishConfig();
-
-        $this->registerDirectives();
-
-        static::registerMenu($events, $config);
-    }
-
     public function register()
     {
         $this->app->singleton(MenuBuilder::class, function (Container $app) {
@@ -32,6 +21,17 @@ class ModuleServiceProvider extends ServiceProvider
                 $app
             );
         });
+    }
+
+    public function boot(Factory $view,Dispatcher $events, Repository $config)
+    {
+        $this->loadViews();
+
+        $this->publishConfig();
+
+        static::registerMenu($events, $config);
+
+        $this->registerViewComposers($view, $this->app);
     }
 
     private function loadViews()
@@ -53,7 +53,7 @@ class ModuleServiceProvider extends ServiceProvider
             $configPath => config_path('menu-builder.php'),
         ], 'config');
 
-        $this->mergeConfigFrom($configPath, 'menubuilder');
+        $this->mergeConfigFrom($configPath, 'menu-builder');
     }
 
     private function packagePath($path)
@@ -61,26 +61,9 @@ class ModuleServiceProvider extends ServiceProvider
         return __DIR__ . "/../$path";
     }
 
-    private function registerDirectives()
+    private function registerViewComposers(Factory $view, Container $app)
     {
-
-        Blade::directive('sidebarMenu', function (MenuBuilder $menuBuilder) {
-            return "
-            <ul class='sidebar-menu' data-widget='tree'>
-        @each('menu-builder::partials.menu-item', $menuBuilder->menu(), 'item')
-                </ul>
-            ";
-        });
-
-        Blade::directive('topNavMenu', function (MenuBuilder $menuBuilder) {
-            return "
-            <div class='collapse navbar-collapse pull-left' id='navbar-collapse'>
-                        <ul class='nav navbar-nav'>
-                            @each('menu-builder::partials.menu-item-top-nav', $menuBuilder->menu(), 'item')
-                        </ul>
-                    </div>
-            ";
-        });
+        $view->composer($app['config']['menu-builder.views'], MenuBuilderComposer::class);
     }
 
     public static function registerMenu(Dispatcher $events, Repository $config)

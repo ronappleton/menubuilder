@@ -9,7 +9,7 @@ use RonAppleton\MenuBuilder\Events\BuildingMenu;
 
 class MenuBuilder
 {
-    public $menu;
+    protected $menu;
 
     protected $filters;
 

@@ -92,6 +92,11 @@ return [
         ],
     ],
 
+    'views' => [
+       'admin.layout.sidebar.left',
+
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Menu Filters
@@ -105,11 +110,11 @@ return [
     */
 
     'filters' => [
-        JeroenNoten\LaravelAdminLte\Menu\Filters\HrefFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\SubmenuFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\HrefFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\ActiveFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\SubmenuFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\ClassesFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\GateFilter::class,
     ],
 
 ];
