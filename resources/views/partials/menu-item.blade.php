@@ -1,5 +1,5 @@
-{{ $active = config('menu-builder.classes.active') }}
-{{ $activeClass = config($active) }}
+<?php $active = config('menu-builder.classes.active') ?>
+<?php $activeClass = config($active) ?>
 
 @if (is_string($item))
     <li class="header">{{ $item }}</li>
@@ -24,7 +24,7 @@
         </a>
         @if (isset($item['submenu']))
             <ul class="{{ $item['submenu_class'] }}">
-                @each('adminlte::partials.menu-item', $item['submenu'], 'item')
+                @each('menu-builder::partials.menu-item', $item['submenu'], 'item')
             </ul>
         @endif
     </li>
