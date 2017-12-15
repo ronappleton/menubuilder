@@ -1,6 +1,6 @@
 <?php
 
-namespace RonAppleton\Http\ViewComposers;
+namespace RonAppleton\MenuBuilder\Http\ViewComposers;
 
 use Illuminate\View\View;
 use RonAppleton\MenuBuilder\MenuBuilder;

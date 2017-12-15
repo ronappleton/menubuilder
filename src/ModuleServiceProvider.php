@@ -63,7 +63,8 @@ class ModuleServiceProvider extends ServiceProvider
 
     private function registerViewComposers(Factory $view, Container $app)
     {
-        $view->composer($app['config']['menu-builder.views'], MenuBuilderComposer::class);
+        $viewArray = $app['config']['menu-builder.views'];
+        $view->composer($viewArray, MenuBuilderComposer::class);
     }
 
     public static function registerMenu(Dispatcher $events, Repository $config)

@@ -93,7 +93,7 @@ return [
     ],
 
     'views' => [
-       'admin.layout.sidebar.left',
+       'layouts.admin.sidebars.left',
 
     ],
 
