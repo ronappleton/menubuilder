@@ -1,0 +1,30 @@
+{
+    "name": "ronappleton/menubuilder",
+    "description": "Laravel menu builder for nav",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ron Appleton",
+            "email": "ron.appleton@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "laravel/framework": "^5.6@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "RonAppleton\\MenuBuilder\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RonAppleton\\MenuBuilder\\ModuleServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    }
+}

@@ -1,9 +1,9 @@
 <?php
 
-namespace JeroenNoten\LaravelAdminLte\Menu\Filters;
+namespace RonAppleton\MenuBuilder\Menu\Filters;
 
 use Illuminate\Contracts\Auth\Access\Gate;
-use JeroenNoten\LaravelAdminLte\Menu\Builder;
+use RonAppleton\MenuBuilder\Menu\Builder;
 
 class GateFilter implements FilterInterface
 {
