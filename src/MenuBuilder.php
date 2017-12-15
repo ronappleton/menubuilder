@@ -29,11 +29,17 @@ class MenuBuilder
 
     public function menu()
     {
-        if (! $this->menu) {
+        if (!$this->menu) {
             $this->menu = $this->buildMenu();
         }
 
         return $this->menu;
+    }
+
+    public function classes()
+    {
+        $active = config('menu-builder.classes.active');
+        return config($active);
     }
 
     protected function buildMenu()
