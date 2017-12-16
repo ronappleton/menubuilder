@@ -1,8 +1,5 @@
 @section('sideMenu')
-    <ul class='sidebar-menu {{ $menuBuilder->classes()['outer.ul'] }}' data-widget='tree'>
+    <ul class='nav nav-pills flex-column'>
         @each('menu-builder::partials.menu-item', $menuBuilder->menu(), 'item')
     </ul>
-    <script>
-        $('ul').tree()
-    </script>
 @endsection

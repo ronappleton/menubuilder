@@ -21,11 +21,13 @@ return [
         'MAIN NAVIGATION',
         [
             'text' => 'Blog',
+            'dropped' => false,
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
         [
             'text' => 'Pages',
+            'dropped' => false,
             'url' => 'admin/pages',
             'icon' => 'file',
             'label' => 4,
@@ -34,28 +36,34 @@ return [
         'ACCOUNT SETTINGS',
         [
             'text' => 'Profile',
+            'dropped' => false,
             'url' => 'admin/settings',
             'icon' => 'user',
         ],
         [
             'text' => 'Change Password',
+            'dropped' => false,
             'url' => 'admin/settings',
             'icon' => 'lock',
         ],
         [
             'text' => 'Dropdown',
+            'dropped' => false,
             'icon' => 'share',
             'submenu' => [
                 [
                     'text' => 'Level One',
+                    'dropped' => true,
                     'url' => '#',
                 ],
                 [
                     'text' => 'Level One',
+                    'dropped' => true,
                     'url' => '#',
                 ],
                 [
                     'text' => 'Level One',
+                    'dropped' => true,
                     'url' => '#',
                 ],
             ],
@@ -63,21 +71,23 @@ return [
         'LABELS',
         [
             'text' => 'Important',
+            'dropped' => false,
             'icon_color' => 'red',
         ],
         [
             'text' => 'Warning',
+            'dropped' => false,
             'icon_color' => 'yellow',
         ],
         [
             'text' => 'Information',
+            'dropped' => false,
             'icon_color' => 'aqua',
         ],
     ],
 
     'views' => [
-        'menu-builder:partials.menu',
-        'menu-builder:partials.menu-item',
+        'layouts.admin.sidebars.left',
 
     ],
 
