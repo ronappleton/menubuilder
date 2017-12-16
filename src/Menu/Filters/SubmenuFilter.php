@@ -21,8 +21,8 @@ class SubmenuFilter implements FilterInterface
     protected function makeSubmenuClasses()
     {
         $active = config('menu-builder.classes.active');
-
-        $classes = ['treeview-menu', $active['submenu']];
+        
+        $classes = ['treeview-menu', config($active)['submenu']];
 
         return $classes;
     }

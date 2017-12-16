@@ -12,6 +12,9 @@ return [
     | Font Awesome. A string instead of an array represents a header in sidebar
     | layout. The 'can' is a filter on Laravel's built in Gate functionality.
     |
+    | NOTE: This addon uses bootstrap and as such, nested dropdown within dropdowns
+    | are not supported by bootsrap as it is a mobile first framework.
+    |
     */
 
     'menu' => [
@@ -40,7 +43,7 @@ return [
             'icon' => 'lock',
         ],
         [
-            'text' => 'Multilevel',
+            'text' => 'Dropdown',
             'icon' => 'share',
             'submenu' => [
                 [
@@ -50,26 +53,6 @@ return [
                 [
                     'text' => 'Level One',
                     'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'Level Two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
                 ],
                 [
                     'text' => 'Level One',
@@ -95,29 +78,6 @@ return [
     'views' => [
         'menu-builder:partials.menu',
         'menu-builder:partials.menu-item',
-
-    ],
-
-    'classes' => [
-
-        'active' => 'menu-builder.classes.bootstrap.4', //Tells menu-item.blade.php which of below to use
-
-        'bootstrap' => [
-            "3" => [
-                'outer.ul' => '',
-                'item' => '',
-                'link' => '',
-            ],
-            "4" => [
-                'outer.ul' => 'nav nav-pills flex-column',
-
-                'item' => 'nav-item',
-                'link' => 'nav-link',
-
-                'submenu' => 'nav-item'
-
-            ],
-        ],
 
     ],
 

@@ -36,12 +36,6 @@ class MenuBuilder
         return $this->menu;
     }
 
-    public function classes()
-    {
-        $active = config('menu-builder.classes.active');
-        return config($active);
-    }
-
     protected function buildMenu()
     {
         $builder = new Builder($this->buildFilters());
