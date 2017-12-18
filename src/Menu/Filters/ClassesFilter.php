@@ -11,14 +11,12 @@ class ClassesFilter implements FilterInterface
         if (! isset($item['header'])) {
             $item['classes'] = $this->makeClasses($item);
             $item['class'] = implode(' ', $item['classes']);
-            $item['top_nav_classes'] = $this->makeClasses($item, true);
-            $item['top_nav_class'] = implode(' ', $item['top_nav_classes']);
         }
 
         return $item;
     }
 
-    protected function makeClasses($item, $topNav = false)
+    protected function makeClasses($item)
     {
         $classes = [];
 
@@ -27,7 +25,14 @@ class ClassesFilter implements FilterInterface
         }
 
         if (isset($item['submenu'])) {
-            $classes[] = $topNav ? 'dropdown' : 'treeview';
+            $classes[] = 'dropdown';
+        }
+
+        if (in_array('dropped', $item)){
+            $classes[] = 'dropdown-item';
+        }
+        else {
+            $classes[] = 'nav-link';
         }
 
         return $classes;

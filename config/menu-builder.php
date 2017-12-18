@@ -16,54 +16,70 @@ return [
     | are not supported by bootsrap as it is a mobile first framework.
     |
     */
+    'sidebar-background-color' => 'bg-inverse',
+    'sidebar-text-color' => 'text-white',
 
-    'menu' => [
-        'MAIN NAVIGATION',
-        [
-            'text' => 'Blog',
-            'dropped' => false,
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
+    'sidebar-menu' => [
         [
             'text' => 'Pages',
-            'dropped' => false,
+            'text_color' => 'success',
             'url' => 'admin/pages',
             'icon' => 'file',
-            'label' => 4,
-            'label_color' => 'success',
+            'icon_color' => 'success',
+            'badge_model' => 'App\User',
+            'badge_method' => 'totalUsers',
+            'badge_pill',
+            'badge_color' => 'danger',
+            'badge_conditions' => [
+                [
+                    'condition' => '>',
+                    'value' => 1,
+                    'continue' => true,
+                ],
+                [
+                    'condition' => '<',
+                    'value' => 3,
+                    'continue' => false,
+                ],
+                [
+                    'condition' => '===',
+                    'value' => 2,
+                    'color' => 'warning',
+                ],
+                'true_color' => 'success',
+                'false_color' => 'danger',
+            ],
         ],
         'ACCOUNT SETTINGS',
         [
             'text' => 'Profile',
-            'dropped' => false,
             'url' => 'admin/settings',
             'icon' => 'user',
         ],
         [
             'text' => 'Change Password',
-            'dropped' => false,
             'url' => 'admin/settings',
             'icon' => 'lock',
         ],
         [
             'text' => 'Dropdown',
-            'dropped' => false,
             'icon' => 'share',
             'submenu' => [
                 [
                     'text' => 'Level One',
-                    'dropped' => true,
+                    'dropped',
+                    'icon' => 'lock',
+                    'icon_color' => 'success',
                     'url' => '#',
                 ],
                 [
                     'text' => 'Level One',
-                    'dropped' => true,
+                    'dropped',
                     'url' => '#',
                 ],
                 [
                     'text' => 'Level One',
-                    'dropped' => true,
+                    'dropped',
                     'url' => '#',
                 ],
             ],
@@ -71,24 +87,36 @@ return [
         'LABELS',
         [
             'text' => 'Important',
-            'dropped' => false,
+            'icon' => 'lock',
             'icon_color' => 'red',
         ],
         [
             'text' => 'Warning',
-            'dropped' => false,
             'icon_color' => 'yellow',
         ],
         [
             'text' => 'Information',
-            'dropped' => false,
             'icon_color' => 'aqua',
         ],
     ],
 
-    'views' => [
-        'layouts.admin.sidebars.left',
+    'navbar-left-menu' => [
 
+    ],
+
+    'navbar-right-menu' => [
+
+    ],
+
+    'navbar-middle-menu' => [
+
+    ],
+
+    'views' => [
+        'menu-builder::layouts.admin.sidebar.left',
+        'menu-builder::layouts.admin.navbar.menus.left',
+        'menu-builder::layouts.admin.navbar.menus.right',
+        'menu-builder::layouts.admin.navbar.menus.middle',
     ],
 
     /*
@@ -104,7 +132,9 @@ return [
     */
 
     'filters' => [
+        RonAppleton\MenuBuilder\Menu\Filters\IconFilter::class,
         RonAppleton\MenuBuilder\Menu\Filters\HrefFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\BadgeFilter::class,
         RonAppleton\MenuBuilder\Menu\Filters\ActiveFilter::class,
         RonAppleton\MenuBuilder\Menu\Filters\SubmenuFilter::class,
         RonAppleton\MenuBuilder\Menu\Filters\ClassesFilter::class,

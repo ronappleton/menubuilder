@@ -7,7 +7,10 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
-use RonAppleton\MenuBuilder\Events\BuildingMenu;
+use RonAppleton\MenuBuilder\Events\BuildingSidebar;
+use RonAppleton\MenuBuilder\Events\BuildingNavbarLeft;
+use RonAppleton\MenuBuilder\Events\BuildingNavbarRight;
+use RonAppleton\MenuBuilder\Events\BuildingNavbarMiddle;
 use RonAppleton\MenuBuilder\Http\ViewComposers\MenuBuilderComposer;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -23,13 +26,13 @@ class ModuleServiceProvider extends ServiceProvider
         });
     }
 
-    public function boot(Factory $view,Dispatcher $events, Repository $config)
+    public function boot(Factory $view, Dispatcher $events, Repository $config)
     {
         $this->loadViews();
 
         $this->publishConfig();
 
-        static::registerMenu($events, $config);
+        static::eventsListen($events, $config);
 
         $this->registerViewComposers($view, $this->app);
     }
@@ -64,15 +67,37 @@ class ModuleServiceProvider extends ServiceProvider
     private function registerViewComposers(Factory $view, Container $app)
     {
         $viewArray = $app['config']['menu-builder.views'];
-        
+
         $view->composer($viewArray, MenuBuilderComposer::class);
     }
 
-    public static function registerMenu(Dispatcher $events, Repository $config)
+    public static function eventsListen(Dispatcher $events, Repository $config)
     {
-        $events->listen(BuildingMenu::class, function (BuildingMenu $event) use ($config) {
-            $menu = $config->get('menu-builder.menu');
-            call_user_func_array([$event->menu, 'add'], $menu);
+        $events->listen(BuildingSidebar::class, function (BuildingSidebar $event) use ($config) {
+            $menu = $config->get('menu-builder.sidebar-menu');
+            self::registerMenu($event, $menu);
         });
+
+        $events->listen(BuildingNavbarLeft::class, function (BuildingNavbarLeft $event) use ($config) {
+            $menu = $config->get('menu-builder.navbar-left-menu');
+            self::registerMenu($event, $menu);
+        });
+
+        $events->listen(BuildingNavbarRight::class, function (BuildingNavbarRight $event) use ($config) {
+            $menu = $config->get('menu-builder.navbar-right-menu');
+            self::registerMenu($event, $menu);
+        });
+
+        $events->listen(BuildingNavbarMiddle::class, function (BuildingNavbarMiddle $event) use ($config) {
+            $menu = $config->get('menu-builder.navbar-middle-menu');
+            self::registerMenu($event, $menu);
+        });
+    }
+
+    private static function registerMenu($event, $menu)
+    {
+        if (!empty($menu)) {
+            call_user_func_array([$event->menu, 'add'], $menu);
+        }
     }
 }

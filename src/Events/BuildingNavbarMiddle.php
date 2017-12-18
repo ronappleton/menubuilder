@@ -4,7 +4,7 @@ namespace RonAppleton\MenuBuilder\Events;
 
 use RonAppleton\MenuBuilder\Menu\Builder;
 
-class BuildingMenu
+class BuildingNavbarMiddle
 {
     public $menu;
 
