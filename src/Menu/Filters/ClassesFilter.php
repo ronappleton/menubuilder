@@ -28,16 +28,16 @@ class ClassesFilter implements FilterInterface
             $classes[] = 'dropdown';
         }
 
-        if (in_array('dropped', $item)){
-            $classes[] = 'dropdown-item';
-        }
-        else {
-            $classes[] = 'nav-link';
-        }
+        $classes[] = in_array('dropped', $item) ? 'dropdown-item' : 'nav-link';
 
         if(isset($item['text_color']))
         {
-            $classes[] = 'text-' . $item['text_color'];
+            $classes[] = "text-{$item['text_color']}";
+        }
+
+        if(isset($item['bg_color']))
+        {
+            $classes[] = "gb-{$item['bg_color']}";
         }
 
         return $classes;

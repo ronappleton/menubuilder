@@ -6,7 +6,6 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
 use RonAppleton\MenuBuilder\Events\BuildingMenu;
 use RonAppleton\MenuBuilder\Menu\Builder;
-use Illuminate\Contracts\Config\Repository;
 
 class MenuBuilder
 {

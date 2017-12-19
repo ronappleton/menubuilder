@@ -2,8 +2,6 @@
 
 namespace RonAppleton\MenuBuilder\Menu;
 
-use Illuminate\Config\Repository;
-
 class Builder
 {
     const HIGHEST_PRIORITY = 'highest';
