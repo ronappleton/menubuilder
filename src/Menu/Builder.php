@@ -2,26 +2,11 @@
 
 namespace RonAppleton\MenuBuilder\Menu;
 
+use RonAppleton\MenuBuilder\Menu\Filters\PriorityFilter;
+
 class Builder
 {
-    const HIGHEST_PRIORITY = 'highest';
-    const HIGH_PRIORITY = 'high';
-    const MEDIUM_HIGH_PRIORITY = 'medium-high';
-    const LOW_HIGH_PRIORITY = 'low-high';
-
-    const HIGHEST_MEDIUM_PRIORITY = 'highest-medium';
-    const HIGH_MEDIUM_PRIORITY = 'high-medium';
-    const MEDIUM_PRIORITY = 'medium';
-    const LOW_MEDIUM_PRIORITY = 'low-medium';
-
-    const HIGHEST_LOW_PRIORITY = 'highest-low';
-    const HIGH_LOW_PRIORITY = 'high-low';
-    const MEDIUM_LOW_PRIORITY = 'medium-low';
-    const LOW_PRIORITY = 'low';
-
-    private $priorityOrder = [];
-
-    public $menu = [];
+    private $menu = [];
 
     public $menuName;
 
@@ -41,74 +26,18 @@ class Builder
         $items = $this->transformItems(func_get_args());
 
         foreach ($items as $item) {
-
-            if(!isset($item['priority']))
-            {
-                $this->priorityOrder[11][] = $item;
-                continue;
-            }
-
-            if(isset($item['priority']))
-            {
-                switch($item['priority'])
-                {
-                    case self::HIGHEST_PRIORITY:
-                        $this->priorityOrder[0][] = $item;
-                        break;
-                    case self::HIGH_PRIORITY:
-                        $this->priorityOrder[1][] = $item;
-                        break;
-                    case self::MEDIUM_HIGH_PRIORITY:
-                        $this->priorityOrder[2][] = $item;
-                        break;
-                    case self::LOW_HIGH_PRIORITY:
-                        $this->priorityOrder[3][] = $item;
-                        break;
-                    case self::HIGHEST_MEDIUM_PRIORITY:
-                        $this->priorityOrder[4][] = $item;
-                        break;
-                    case self::HIGH_MEDIUM_PRIORITY:
-                        $this->priorityOrder[5][] = $item;
-                        break;
-                    case self::MEDIUM_PRIORITY:
-                        $this->priorityOrder[6][] = $item;
-                        break;
-                    case self::LOW_MEDIUM_PRIORITY:
-                        $this->priorityOrder[6][] = $item;
-                        break;
-                    case self::HIGHEST_LOW_PRIORITY:
-                        $this->priorityOrder[7][] = $item;
-                        break;
-                    case self::HIGH_LOW_PRIORITY:
-                        $this->priorityOrder[8][] = $item;
-                        break;
-                    case self::MEDIUM_LOW_PRIORITY:
-                        $this->priorityOrder[9][] = $item;
-                        break;
-                    default:
-                        $this->priorityOrder[11][] = $item;
-                }
-            }
+            array_push($this->menu, $item);
         }
     }
 
-    public function populateMenu()
+    public function getMenu()
     {
-        ksort($this->priorityOrder);
-
-        foreach($this->priorityOrder as $priorityOrderArray)
-        {
-            foreach($priorityOrderArray as $item)
-            {
-                array_push($this->menu, $item);
-            }
-        }
+        return (new PriorityFilter)->transform($this->menu);
     }
 
     private function defaultTextColor($item)
     {
-        if(isset($item['text_color']))
-        {
+        if (isset($item['text_color'])) {
             return $item;
         }
 

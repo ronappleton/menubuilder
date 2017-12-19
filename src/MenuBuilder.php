@@ -44,9 +44,7 @@ class MenuBuilder
 
         $this->events->fire(new BuildingMenu($builder, $toBuild));
 
-        $builder->populateMenu();
-
-        return $builder->menu;
+        return $builder->getMenu();
     }
 
     protected function buildFilters()
