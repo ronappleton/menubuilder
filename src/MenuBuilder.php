@@ -4,11 +4,9 @@ namespace RonAppleton\MenuBuilder;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
-use RonAppleton\MenuBuilder\Events\BuildingNavbarLeft;
-use RonAppleton\MenuBuilder\Events\BuildingNavbarMiddle;
-use RonAppleton\MenuBuilder\Events\BuildingNavbarRight;
-use RonAppleton\MenuBuilder\Events\BuildingSidebar;
+use RonAppleton\MenuBuilder\Events\BuildingMenu;
 use RonAppleton\MenuBuilder\Menu\Builder;
+use Illuminate\Contracts\Config\Repository;
 
 class MenuBuilder
 {
@@ -32,7 +30,7 @@ class MenuBuilder
         $this->container = $container;
     }
 
-    public function menu($toBuild = 'sidebar')
+    public function menu($toBuild)
     {
         if (!$this->menuName == $toBuild) {
             $this->menu = $this->buildMenu($toBuild);
@@ -43,25 +41,11 @@ class MenuBuilder
 
     protected function buildMenu($toBuild)
     {
-        $builder = new Builder($this->buildFilters());
+        $builder = new Builder($this->buildFilters(), $toBuild);
 
-        switch ($toBuild) {
-            case 'sidebar':
-                $this->events->fire(new BuildingSidebar($builder));
-                break;
-            case 'navbar-left':
-                $this->events->fire(new BuildingNavbarLeft($builder));
-                break;
-            case 'navbar-right':
-                $this->events->fire(new BuildingNavbarRight($builder));
-                break;
-            case 'navbar-middle':
-                $this->events->fire(new BuildingNavbarMiddle($builder));
-                break;
-            default:
-                $this->events->fire(new BuildingSidebar($builder));
-        }
+        $this->events->fire(new BuildingMenu($builder, $toBuild));
 
+        $builder->populateMenu();
 
         return $builder->menu;
     }

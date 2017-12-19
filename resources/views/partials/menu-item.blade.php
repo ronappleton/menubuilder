@@ -3,13 +3,22 @@
 @else
     @if(isset($item['submenu']))
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbar{{ $item['text'] }}" role="button"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ $item['text'] }}
-            </a>
+            @if(isset($item['text_color']))
+                <a class="nav-link dropdown-toggle text-{{ $item['text_color'] }}" href="#"
+                   id="navbar{{ $item['text'] }}" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ $item['text'] }}
+                </a>
+            @else
+                <a class="nav-link dropdown-toggle" href="#" id="navbar{{ $item['text'] }}" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ $item['text'] }}
+                </a>
+            @endif
             <div class="dropdown-menu" aria-labelledby="navbar{{ $item['text'] }}">
                 @each('menu-builder::partials.menu-item', $item['submenu'], 'item')
             </div>
+
         </li>
     @else
         @if(!in_array('dropped', $item))

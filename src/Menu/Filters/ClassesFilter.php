@@ -35,6 +35,11 @@ class ClassesFilter implements FilterInterface
             $classes[] = 'nav-link';
         }
 
+        if(isset($item['text_color']))
+        {
+            $classes[] = 'text-' . $item['text_color'];
+        }
+
         return $classes;
     }
 }

@@ -7,10 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Container\Container;
-use RonAppleton\MenuBuilder\Events\BuildingSidebar;
-use RonAppleton\MenuBuilder\Events\BuildingNavbarLeft;
-use RonAppleton\MenuBuilder\Events\BuildingNavbarRight;
-use RonAppleton\MenuBuilder\Events\BuildingNavbarMiddle;
+use RonAppleton\MenuBuilder\Events\BuildingMenu;
 use RonAppleton\MenuBuilder\Http\ViewComposers\MenuBuilderComposer;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -73,23 +70,8 @@ class ModuleServiceProvider extends ServiceProvider
 
     public static function eventsListen(Dispatcher $events, Repository $config)
     {
-        $events->listen(BuildingSidebar::class, function (BuildingSidebar $event) use ($config) {
-            $menu = $config->get('menu-builder.sidebar-menu');
-            self::registerMenu($event, $menu);
-        });
-
-        $events->listen(BuildingNavbarLeft::class, function (BuildingNavbarLeft $event) use ($config) {
-            $menu = $config->get('menu-builder.navbar-left-menu');
-            self::registerMenu($event, $menu);
-        });
-
-        $events->listen(BuildingNavbarRight::class, function (BuildingNavbarRight $event) use ($config) {
-            $menu = $config->get('menu-builder.navbar-right-menu');
-            self::registerMenu($event, $menu);
-        });
-
-        $events->listen(BuildingNavbarMiddle::class, function (BuildingNavbarMiddle $event) use ($config) {
-            $menu = $config->get('menu-builder.navbar-middle-menu');
+        $events->listen(BuildingMenu::class, function (BuildingMenu $event) use ($config) {
+            $menu = $config->get("menu-builder.{$event->menuName}");
             self::registerMenu($event, $menu);
         });
     }

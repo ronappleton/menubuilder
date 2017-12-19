@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Test Panel</title>
+    <title>{{ env('APP_NAME', 'MenuBuilder') }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -14,8 +14,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Material Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-
 
 </head>
 <body>
@@ -36,10 +34,14 @@
     </div>
 
 @else
-    <div class="p-2">
-        @include('menu-builder::layouts.admin.sidebar.left')
 
-        @yield('content')
+    <div class="container-fluid">
+        <div class="row">
+            @include('menu-builder::layouts.admin.sidebar.left')
+            <div class="col">
+                @yield('content')
+            </div>
+        </div>
     </div>
 
 @endguest

@@ -16,6 +16,31 @@ return [
     | are not supported by bootsrap as it is a mobile first framework.
     |
     */
+
+    /**
+     * Available Bootstrap 4 Colors (https://getbootstrap.com/docs/4.0/utilities/colors/)
+     *
+     * primary
+     *
+     * secondary
+     *
+     * success
+     *
+     * danger
+     *
+     * warning
+     *
+     * info
+     *
+     * light
+     *
+     * dark
+     *
+     * muted
+     *
+     * white
+     */
+
     'sidebar-background-color' => 'bg-inverse',
     'sidebar-text-color' => 'text-white',
 
