@@ -7,11 +7,14 @@
                 <a class="nav-link dropdown-toggle text-{{ $item['text_color'] }}" href="#"
                    id="navbar{{ $item['text'] }}" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ $item['text'] }}
+                    <span class="{{ $item['class'] }}"> {{ $item['text'] }}</span>
                 </a>
             @else
                 <a class="nav-link dropdown-toggle" href="#" id="navbar{{ $item['text'] }}" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @if(isset($item['icon_class']))
+                        <i class="{{ $item['icon_class'] }}"></i>
+                    @endif
                     {{ $item['text'] }}
                 </a>
             @endif

@@ -41,41 +41,77 @@ return [
      * white
      */
 
-    'sidebar-background-color' => 'bg-inverse',
-    'sidebar-text-color' => 'text-white',
-
-    'sidebar-menu' => [
+    'example-menu-default-text-color' => 'secondary',
+    'example-menu' => [
         [
-            'text' => 'Pages',
-            'text_color' => 'success',
-            'url' => 'admin/pages',
-            'icon' => 'file',
-            'icon_color' => 'success',
-            'badge_model' => 'App\User',
-            'badge_method' => 'totalUsers',
-            'badge_pill',
-            'badge_color' => 'danger',
+            'header' => 'Communication',
+            'priority' => 'high'
+        ],
+        [
+            'priority' => 'high',
+            'text' => 'Messages',
+            'icon' => 'commenting-o',
+            'badge_model' => 'RonAppleton\MenuBuilder\Models\BadgeExample',
+            'badge_method' => 'unreadMessages',
             'badge_conditions' => [
                 [
-                    'condition' => '>',
-                    'value' => 1,
-                    'continue' => true,
+                    'condition' => '===',
+                    'value' => 0,
+                    'color' => 'success',
                 ],
                 [
                     'condition' => '<',
-                    'value' => 3,
-                    'continue' => false,
+                    'value' => 0,
+                    'color' => 'info',
                 ],
                 [
-                    'condition' => '===',
-                    'value' => 2,
+                    'condition' => '>',
+                    'value' => 20,
+                    'color' => 'warning',
+                ],
+                [
+                    'condition' => '>',
+                    'value' => 100,
                     'color' => 'warning',
                 ],
                 'true_color' => 'success',
                 'false_color' => 'danger',
-            ],
+            ]
         ],
-        'ACCOUNT SETTINGS',
+        [
+            'priority' => 'high',
+            'text' => 'Email',
+            'icon' => 'envelope-o',
+            'badge_model' => 'RonAppleton\MenuBuilder\Models\BadgeExample',
+            'badge_method' => 'unreadEmails',
+            'badge_conditions' => [
+                [
+                    'condition' => '===',
+                    'value' => 0,
+                    'color' => 'success',
+                ],
+                [
+                    'condition' => '>',
+                    'value' => 0,
+                    'color' => 'info',
+                ],
+                'true_color' => 'success',
+                'false_color' => 'danger',
+            ]
+        ],
+        [
+            'priority' => 'high',
+            'text' => 'Users',
+            'url' => 'admin/pages',
+            'icon' => 'users',
+            'badge_model' => 'RonAppleton\MenuBuilder\Models\BadgeExample',
+            'badge_method' => 'totalUsers',
+            'badge_pill',
+            'badge_color' => 'success',
+        ],
+        [
+            'header' => 'Account Settings',
+        ],
         [
             'text' => 'Profile',
             'url' => 'admin/settings',
@@ -87,14 +123,19 @@ return [
             'icon' => 'lock',
         ],
         [
-            'text' => 'Dropdown',
-            'icon' => 'share',
+            'header' => 'Configuration',
+        ],
+        [
+            'text' => 'General',
+            'icon' => 'tasks',
+            'priority' => 'low',
             'submenu' => [
                 [
                     'text' => 'Level One',
                     'dropped',
                     'icon' => 'lock',
                     'icon_color' => 'success',
+
                     'url' => '#',
                 ],
                 [
@@ -109,32 +150,31 @@ return [
                 ],
             ],
         ],
-        'LABELS',
         [
-            'text' => 'Important',
-            'icon' => 'lock',
-            'icon_color' => 'red',
+            'text' => 'Editing',
+            'icon' => 'pencil',
+            'priority' => 'low',
+            'submenu' => [
+                [
+                    'text' => 'Level One',
+                    'dropped',
+                    'icon' => 'lock',
+                    'icon_color' => 'success',
+
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Level One',
+                    'dropped',
+                    'url' => '#',
+                ],
+                [
+                    'text' => 'Level One',
+                    'dropped',
+                    'url' => '#',
+                ],
+            ],
         ],
-        [
-            'text' => 'Warning',
-            'icon_color' => 'yellow',
-        ],
-        [
-            'text' => 'Information',
-            'icon_color' => 'aqua',
-        ],
-    ],
-
-    'navbar-left-menu' => [
-
-    ],
-
-    'navbar-right-menu' => [
-
-    ],
-
-    'navbar-middle-menu' => [
-
     ],
 
     'views' => [
@@ -150,8 +190,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | Choose what filters you want to include for rendering the menu.
-    | You can add your own filters to this array after you've created them.
-    | You can comment out the GateItemFilter if you don't want to use Laravel's
+    | You can add your own filters to these arrays after you've created them.
+    | You can comment out the GateFilter if you don't want to use Laravel's
     | built in Gate functionality
     |
     */
@@ -162,12 +202,18 @@ return [
         RonAppleton\MenuBuilder\Menu\Filters\BadgeItemFilter::class,
         RonAppleton\MenuBuilder\Menu\Filters\ActiveItemFilter::class,
         RonAppleton\MenuBuilder\Menu\Filters\SubmenuItemFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\TextColorItemFilter::class,
         RonAppleton\MenuBuilder\Menu\Filters\ClassesItemFilter::class,
         RonAppleton\MenuBuilder\Menu\Filters\GateItemFilter::class,
     ],
 
+    /*
+     * Note that menu filters are run on return of the menu, after all item filters have
+     * run and immediately before return.
+     */
+
     'menuFilters' => [
         RonAppleton\MenuBuilder\Menu\Filters\PriorityFilter::class,
-    ],
+    ]
 
 ];

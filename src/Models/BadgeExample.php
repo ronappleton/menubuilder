@@ -16,6 +16,6 @@ class BadgeExample
 
     public function unreadMessages()
     {
-        return 20;
+        return 15;
     }
 }
