@@ -16,7 +16,8 @@ class ModuleServiceProvider extends ServiceProvider
     {
         $this->app->singleton(MenuBuilder::class, function (Container $app) {
             return new MenuBuilder(
-                $app['config']['menu-builder.filters'],
+                $app['config']['menu-builder.itemFilters'],
+                $app['config']['menu-builder.menuFilters'],
                 $app['events'],
                 $app
             );
