@@ -13,12 +13,14 @@ class BadgeItemFilter implements ItemFilterInterface
 
     public function transform($item, Builder $builder)
     {
-        if (!isset($item['header']) && isset($item['badge_model']) && isset($item['badge_method'])) {
-            $this->badgeValue = $this->makeBadgeValue($item);
-            $this->setConditions($item);
-            $item['badge_class'] = $this->makeBadgeClass($item);
-            $item['badge_value'] = $this->badgeValue;
+        if (!isset($item['badge_model']) || !isset($item['badge_method'])) {
+            return $item;
         }
+
+        $this->badgeValue = $this->makeBadgeValue($item);
+        $this->setConditions($item);
+        $item['badge_class'] = $this->makeBadgeClass($item);
+        $item['badge_value'] = $this->badgeValue;
 
         return $item;
     }
@@ -26,17 +28,24 @@ class BadgeItemFilter implements ItemFilterInterface
     private function makeBadgeValue($item)
     {
         $model = $item['badge_model'];
-
         $method = $item['badge_method'];
 
-        return (new $model)->$method();
+        if (class_exists($model)) {
+            $model = new $model;
+        }
+
+        if (method_exists($model, $method)) {
+            return (new $model)->$method();
+        }
+
+        return;
     }
 
     private function makeBadgeClass($item)
     {
         return "badge{$this->getPill($item)}{$this->getColor($item)} pull-right";
     }
-    
+
     private function getPill($item)
     {
         return in_array('badge_pill', $item) ? ' badge-pill' : '';
@@ -44,11 +53,14 @@ class BadgeItemFilter implements ItemFilterInterface
 
     private function getColor($item)
     {
-        $conditionColor = $this->testBadgeConditions();
+        if(isset($item['badge_conditions']))
+        {
+            $conditionColor = $this->testBadgeConditions();
+        }
 
-        $badgeColor = isset($item['badge_color']) ? $item['badge_color'] : null;
+        $badgeColor = isset($item['badge_color']) ? $item['badge_color'] : 'secondary';
 
-        $color = empty($conditionColor) ?  empty($badgeColor) ? null : $badgeColor : $conditionColor;
+        $color = isset($conditionColor) ? $conditionColor : $badgeColor;
 
         return empty($color) ? '' : " badge-{$color}";
     }
@@ -62,69 +74,69 @@ class BadgeItemFilter implements ItemFilterInterface
 
     private function testBadgeConditions()
     {
-        if (empty($this->conditions)) {
-            return null;
-        }
-
-        $result = false;
-
         foreach ($this->conditions as $condition) {
+
+            if (!is_array($condition)) {
+                continue;
+            }
 
             switch ($condition['condition']) {
                 case '==':
                     $result = $this->badgeValue == $condition['value'];
+                    $color = $this->conditionColor($condition, $result);
                     break;
                 case '===':
                     $result = $this->badgeValue === $condition['value'];
+                    $color = $this->conditionColor($condition, $result);
                     break;
                 case '!=':
                     $result = $this->badgeValue != $condition['value'];
+                    $color = $this->conditionColor($condition, $result);
                     break;
                 case '<>':
                     $result = $this->badgeValue <> $condition['value'];
+                    $color = $this->conditionColor($condition, $result);
                     break;
                 case '!==':
                     $result = $this->badgeValue !== $condition['value'];
+                    $color = $this->conditionColor($condition, $result);
                     break;
                 case '>':
                     $result = $this->badgeValue > $condition['value'];
+                    $color = $this->conditionColor($condition, $result);
                     break;
                 case '<':
                     $result = $this->badgeValue < $condition['value'];
+                    $color = $this->conditionColor($condition, $result);
                     break;
                 case '>=':
                     $result = $this->badgeValue >= $condition['value'];
+                    $color = $this->conditionColor($condition, $result);
                     break;
                 case '<=':
                     $result = $this->badgeValue <= $condition['value'];
+                    $color = $this->conditionColor($condition, $result);
                     break;
             }
-            if (!$this->continueOn($condition) || !$result) {
-                return $this->conditionColor($condition, $result);
+
+            $result ? $lastColor = $color : null;
+
+            if (!$result) {
+                if (!empty($lastColor)) {
+                    return $lastColor;
+                }
             }
         }
-        return $this->conditionColor(null, $result);
-    }
-
-    private function continueOn($condition)
-    {
-        if (isset($condition['continue']) && $condition['continue']) {
-            return true;
-        }
-        return false;
+        return $color;
     }
 
     private function conditionColor($condition, $result = false)
     {
-        if (!empty($condition)) {
-            if (isset($condition['color']) && $result) {
-                return $condition['color'];
-            }
+        if (isset($condition['color']) && $result) {
+            return $condition['color'];
         }
 
-        $result = $result ? 'true' : 'false';
-
-        return isset($this->conditions[$result . '_color']) ? $this->conditions[$result . '_color'] : null;
+        return $result ? 'success' : 'danger';
     }
 
 }

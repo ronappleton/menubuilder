@@ -9,8 +9,13 @@ class BadgeExample
         return 216;
     }
 
-    public function totalUser()
+    public function totalUsers()
     {
         return 12093;
+    }
+
+    public function unreadMessages()
+    {
+        return 20;
     }
 }
