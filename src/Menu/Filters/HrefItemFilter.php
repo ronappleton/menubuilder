@@ -16,9 +16,7 @@ class HrefItemFilter implements ItemFilterInterface
 
     public function transform($item, Builder $builder)
     {
-        if (! isset($item['header'])) {
-            $item['href'] = $this->makeHref($item);
-        }
+        $item['href'] = $this->makeHref($item);
 
         return $item;
     }

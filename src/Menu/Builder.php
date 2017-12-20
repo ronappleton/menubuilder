@@ -41,17 +41,6 @@ class Builder
         return $this->transformMenu($this->menu);
     }
 
-    private function defaultTextColor($item)
-    {
-        if (isset($item['text_color'])) {
-            return $item;
-        }
-
-        $item['text_color'] = config("menu-builder.{$this->menuName}-default-text-color");
-
-        return $item;
-    }
-
     public function transformItems($items)
     {
         return array_filter(array_map([$this, 'applyItemFilters'], $items));
@@ -63,14 +52,8 @@ class Builder
             return $item;
         }
 
-        $item = $this->defaultTextColor($item);
-
         foreach ($this->itemFilters as $filter) {
             $item = $filter->transform($item, $this);
-        }
-
-        if (isset($item['header'])) {
-            $item = $item['header'];
         }
 
         return $item;
@@ -78,7 +61,7 @@ class Builder
 
     public function transformMenu($menu)
     {
-        return array_filter(array_map([$this, 'applyMenuFilters'], $menu));
+        return $this->applyMenuFilters($menu);
     }
 
     protected function applyMenuFilters($menu)

@@ -8,10 +8,8 @@ class ClassesItemFilter implements ItemFilterInterface
 {
     public function transform($item, Builder $builder)
     {
-        if (! isset($item['header'])) {
-            $item['classes'] = $this->makeClasses($item);
-            $item['class'] = implode(' ', $item['classes']);
-        }
+        $item['classes'] = $this->makeClasses($item);
+        $item['class'] = implode(' ', $item['classes']);
 
         return $item;
     }
@@ -19,6 +17,11 @@ class ClassesItemFilter implements ItemFilterInterface
     protected function makeClasses($item)
     {
         $classes = [];
+
+        if(isset($item['header']))
+        {
+            $classes[] = 'header';
+        }
 
         if ($item['active']) {
             $classes[] = 'active';
@@ -28,7 +31,10 @@ class ClassesItemFilter implements ItemFilterInterface
             $classes[] = 'dropdown';
         }
 
-        $classes[] = in_array('dropped', $item) ? 'dropdown-item' : 'nav-link';
+        if(!isset($item['header']))
+        {
+            $classes[] = in_array('dropped', $item) ? 'dropdown-item' : 'nav-link';
+        }
 
         if(isset($item['text_color']))
         {

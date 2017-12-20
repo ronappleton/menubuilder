@@ -1,5 +1,5 @@
-@if (is_string($item))
-    <li class="header">{{ $item }}</li>
+@if (isset($item['header']))
+    <li class="{{ $item['class'] }}">{{ $item['header'] }}</li>
 @else
     @if(isset($item['submenu']))
         <li class="nav-item dropdown">
