@@ -6,5 +6,5 @@ use RonAppleton\MenuBuilder\Menu\Builder;
 
 interface MenuFilterInterface
 {
-    public function transform($menu);
+    public function transform(array $menu);
 }

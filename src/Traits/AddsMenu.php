@@ -24,7 +24,7 @@ trait AddsMenu
 
     private function getMenu($menuName)
     {
-        $method = 'menu' . $menuName;
+        $method = "menu{$menuName}";
 
         if (method_exists($this, $method)) {
             return $this->$method();

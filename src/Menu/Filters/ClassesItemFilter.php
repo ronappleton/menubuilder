@@ -4,7 +4,7 @@ namespace RonAppleton\MenuBuilder\Menu\Filters;
 
 use RonAppleton\MenuBuilder\Menu\Builder;
 
-class ClassesFilter implements FilterInterface
+class ClassesItemFilter implements ItemFilterInterface
 {
     public function transform($item, Builder $builder)
     {

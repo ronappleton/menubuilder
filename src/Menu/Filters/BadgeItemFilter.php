@@ -5,7 +5,7 @@ namespace RonAppleton\MenuBuilder\Menu\Filters;
 use RonAppleton\MenuBuilder\Menu\Builder;
 use App\User;
 
-class BadgeFilter implements FilterInterface
+class BadgeItemFilter implements ItemFilterInterface
 {
     private $badgeValue;
 

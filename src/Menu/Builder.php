@@ -13,11 +13,17 @@ class Builder
     /**
      * @var array
      */
-    private $filters;
+    private $itemFilters;
 
-    public function __construct(array $filters = [], $menuName)
+    /**
+     * @var array
+     */
+    private $menuFilters;
+
+    public function __construct(array $itemFilters = [], array $menuFilters = [], $menuName)
     {
-        $this->filters = $filters;
+        $this->itemFilters = $itemFilters;
+        $this->menuFilters = $menuFilters;
         $this->menuName = $menuName;
     }
 
@@ -32,7 +38,7 @@ class Builder
 
     public function getMenu()
     {
-        return (new PriorityFilter)->transform($this->menu);
+        return $this->transformMenu($this->menu);
     }
 
     private function defaultTextColor($item)
@@ -48,10 +54,10 @@ class Builder
 
     public function transformItems($items)
     {
-        return array_filter(array_map([$this, 'applyFilters'], $items));
+        return array_filter(array_map([$this, 'applyItemFilters'], $items));
     }
 
-    protected function applyFilters($item)
+    protected function applyItemFilters($item)
     {
         if (is_string($item)) {
             return $item;
@@ -59,7 +65,7 @@ class Builder
 
         $item = $this->defaultTextColor($item);
 
-        foreach ($this->filters as $filter) {
+        foreach ($this->itemFilters as $filter) {
             $item = $filter->transform($item, $this);
         }
 
@@ -68,5 +74,19 @@ class Builder
         }
 
         return $item;
+    }
+
+    public function transformMenu($menu)
+    {
+        return array_filter(array_map([$this, 'applyMenuFilters'], $menu));
+    }
+
+    protected function applyMenuFilters($menu)
+    {
+        foreach ($this->menuFilters as $filter) {
+            $menu = $filter->transform($menu);
+        }
+
+        return $menu;
     }
 }

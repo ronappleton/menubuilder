@@ -13,18 +13,22 @@ class MenuBuilder
 
     protected $menuName;
 
-    protected $filters;
+    protected $itemFilters;
+
+    protected $menuFilters;
 
     protected $events;
 
     protected $container;
 
     public function __construct(
-        array $filters,
+        array $itemFilters,
+        array $menuFilters,
         Dispatcher $events,
         Container $container
     ) {
-        $this->filters = $filters;
+        $this->itemFilters = $itemFilters;
+        $this->menuFilters = $menuFilters;
         $this->events = $events;
         $this->container = $container;
     }
@@ -40,15 +44,20 @@ class MenuBuilder
 
     protected function buildMenu($toBuild)
     {
-        $builder = new Builder($this->buildFilters(), $toBuild);
+        $builder = new Builder($this->buildItemFilters(), $this->buildMenuFilters(), $toBuild);
 
         $this->events->fire(new BuildingMenu($builder, $toBuild));
 
         return $builder->getMenu();
     }
 
-    protected function buildFilters()
+    protected function buildItemFilters()
     {
-        return array_map([$this->container, 'make'], $this->filters);
+        return array_map([$this->container, 'make'], $this->itemFilters);
     }
+    protected function buildMenuFilters()
+    {
+        return array_map([$this->container, 'make'], $this->menuFilters);
+    }
+
 }

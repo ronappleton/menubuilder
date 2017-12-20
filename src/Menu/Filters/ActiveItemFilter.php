@@ -5,7 +5,7 @@ namespace RonAppleton\MenuBuilder\Menu\Filters;
 use RonAppleton\MenuBuilder\Menu\Builder;
 use RonAppleton\MenuBuilder\Menu\ActiveChecker;
 
-class ActiveFilter implements FilterInterface
+class ActiveItemFilter implements ItemFilterInterface
 {
     private $activeChecker;
 

@@ -151,19 +151,23 @@ return [
     |
     | Choose what filters you want to include for rendering the menu.
     | You can add your own filters to this array after you've created them.
-    | You can comment out the GateFilter if you don't want to use Laravel's
+    | You can comment out the GateItemFilter if you don't want to use Laravel's
     | built in Gate functionality
     |
     */
 
-    'filters' => [
-        RonAppleton\MenuBuilder\Menu\Filters\IconFilter::class,
-        RonAppleton\MenuBuilder\Menu\Filters\HrefFilter::class,
-        RonAppleton\MenuBuilder\Menu\Filters\BadgeFilter::class,
-        RonAppleton\MenuBuilder\Menu\Filters\ActiveFilter::class,
-        RonAppleton\MenuBuilder\Menu\Filters\SubmenuFilter::class,
-        RonAppleton\MenuBuilder\Menu\Filters\ClassesFilter::class,
-        RonAppleton\MenuBuilder\Menu\Filters\GateFilter::class,
+    'itemFilters' => [
+        RonAppleton\MenuBuilder\Menu\Filters\IconItemFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\HrefItemFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\BadgeItemFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\ActiveItemFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\SubmenuItemFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\ClassesItemFilter::class,
+        RonAppleton\MenuBuilder\Menu\Filters\GateItemFilter::class,
+    ],
+
+    'menuFilters' => [
+        RonAppleton\MenuBuilder\Menu\Filters\PriorityFilter::class,
     ],
 
 ];

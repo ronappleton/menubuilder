@@ -5,7 +5,7 @@ namespace RonAppleton\MenuBuilder\Menu\Filters;
 use RonAppleton\MenuBuilder\Menu\Builder;
 use Illuminate\Contracts\Routing\UrlGenerator;
 
-class HrefFilter implements FilterInterface
+class HrefItemFilter implements ItemFilterInterface
 {
     protected $urlGenerator;
 

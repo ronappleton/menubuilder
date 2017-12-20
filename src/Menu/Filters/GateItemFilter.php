@@ -5,7 +5,7 @@ namespace RonAppleton\MenuBuilder\Menu\Filters;
 use Illuminate\Contracts\Auth\Access\Gate;
 use RonAppleton\MenuBuilder\Menu\Builder;
 
-class GateFilter implements FilterInterface
+class GateItemFilter implements ItemFilterInterface
 {
     protected $gate;
 
